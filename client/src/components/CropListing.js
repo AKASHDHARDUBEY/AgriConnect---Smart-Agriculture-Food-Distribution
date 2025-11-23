@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './CropListing.css';
 
-const CropListing = () => {
+const CropListing = ({ searchTerm = '' }) => {
   const [crops, setCrops] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [filterLocation, setFilterLocation] = useState('');
 
   useEffect(() => {
@@ -42,21 +41,8 @@ const CropListing = () => {
         <p className="listing-subtitle">Buy directly from farmers at fair prices</p>
       </div>
 
-      {/* Search and Filter Bar */}
+      {/* Filter Bar */}
       <div className="search-filter-bar">
-        <div className="search-box">
-          <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-          <input
-            type="text"
-            placeholder="Search crops..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
-          />
-        </div>
         <div className="filter-box">
           <svg className="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>

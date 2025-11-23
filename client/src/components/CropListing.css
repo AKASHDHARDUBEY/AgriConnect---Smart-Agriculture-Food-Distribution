@@ -1,16 +1,15 @@
 .crop-listing-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0;
 }
 
 .listing-header {
-  text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .listing-title {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   color: #2d5016;
   margin-bottom: 0.5rem;
   font-weight: 700;
@@ -18,27 +17,26 @@
 
 .listing-subtitle {
   color: #666;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
 }
 
-/* Search and Filter Bar */
+/* Filter Bar */
 .search-filter-bar {
   display: flex;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
-.search-box,
 .filter-box {
   flex: 1;
   min-width: 250px;
+  max-width: 300px;
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.search-icon,
 .filter-icon {
   position: absolute;
   left: 1rem;
@@ -46,7 +44,6 @@
   stroke-width: 2;
 }
 
-.search-input,
 .filter-input {
   width: 100%;
   padding: 0.875rem 1rem 0.875rem 3rem;
@@ -54,9 +51,9 @@
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  background: white;
 }
 
-.search-input:focus,
 .filter-input:focus {
   outline: none;
   border-color: #4caf50;
