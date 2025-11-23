@@ -78,7 +78,7 @@ There is currently no unified, data-driven platform that connects **farmers, buy
 
 ---
 
-## 📜 License
+## 📜 License.....
 
 This project is licensed under the **MIT License**.
 
