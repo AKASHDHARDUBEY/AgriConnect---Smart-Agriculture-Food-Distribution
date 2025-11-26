@@ -3,40 +3,50 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 
 import Navbar from "./components/Navbar";
-import CropUploadForm from './components/CropUploadForm';
-import CropListing from './components/CropListing';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
-import LandingHero from "./components/LandingHero";
 
-// Layout wrapper
+import LandingHero from "./components/LandingHero";
+import Marketplace from "./pages/Marketplace";
+import CropUploadForm from './components/CropUploadForm';
+
+
+// ----------- MAIN LAYOUT WRAPPER -----------
 function MainLayout({ children, searchTerm, setSearchTerm }) {
   return (
     <div className="app-layout">
+
+      {/* SIDEBAR */}
       <Sidebar />
-      <main className="app-main" style={{ marginLeft: 240 }}>
+
+      {/* MAIN CONTENT */}
+      <main className="app-main">
         <TopBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <div className="app-content">
+
+        {/* Page Wrapper */}
+        <div className="page-area">
           {children}
         </div>
       </main>
+
     </div>
   );
 }
 
+
+// ---------------- MAIN APP ----------------
 export default function App() {
-  const [refreshKey, setRefreshKey] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
   const handleCropAdded = () => {
-    setRefreshKey(prev => prev + 1);
     navigate('/');
   };
 
   return (
     <div className="App">
 
+      {/* NAVBAR */}
       <Navbar />
 
       <Routes>
@@ -45,10 +55,13 @@ export default function App() {
         <Route
           path="/"
           element={
-            <MainLayout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
+            <MainLayout 
+              searchTerm={searchTerm} 
+              setSearchTerm={setSearchTerm}
+            >
               <>
                 <LandingHero />
-                <CropListing key={refreshKey} searchTerm={searchTerm} />
+                <Marketplace searchTerm={searchTerm} />
               </>
             </MainLayout>
           }
@@ -58,7 +71,10 @@ export default function App() {
         <Route
           path="/upload"
           element={
-            <MainLayout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
+            <MainLayout 
+              searchTerm={searchTerm} 
+              setSearchTerm={setSearchTerm}
+            >
               <CropUploadForm onCropAdded={handleCropAdded} />
             </MainLayout>
           }
@@ -68,13 +84,21 @@ export default function App() {
         <Route
           path="*"
           element={
-            <MainLayout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
-              <CropListing key={refreshKey} searchTerm={searchTerm} />
+            <MainLayout 
+              searchTerm={searchTerm} 
+              setSearchTerm={setSearchTerm}
+            >
+              <>
+                <LandingHero />
+                <Marketplace searchTerm={searchTerm} />
+              </>
             </MainLayout>
           }
         />
+
       </Routes>
 
+      {/* FOOTER */}
       <footer className="app-footer">
         <p>© 2024 AgriConnect - Connecting Farmers, Buyers & Communities</p>
       </footer>
