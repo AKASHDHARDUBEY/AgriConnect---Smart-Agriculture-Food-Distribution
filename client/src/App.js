@@ -1,62 +1,63 @@
-import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import './App.css';
+import React, { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import "./App.css";
 
+/* GLOBAL COMPONENTS */
 import Navbar from "./components/Navbar";
-import Sidebar from './components/Sidebar';
-import TopBar from './components/TopBar';
+import Sidebar from "./components/Sidebar";
+import TopBar from "./components/TopBar";
 
+/* HOME PAGE COMPONENTS */
 import LandingHero from "./components/LandingHero";
 import Marketplace from "./pages/Marketplace";
-import CropUploadForm from './components/CropUploadForm';
 
+/* UPLOAD PAGE */
+import UploadPage from "./pages/UploadPage";
 
-// ----------- MAIN LAYOUT WRAPPER -----------
+/* AUTH PAGES */
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import AdminLogin from "./pages/AdminLogin";
+
+/* ========================= */
+/* MAIN LAYOUT FOR DASHBOARD */
+/* ========================= */
 function MainLayout({ children, searchTerm, setSearchTerm }) {
   return (
     <div className="app-layout">
-
-      {/* SIDEBAR */}
       <Sidebar />
 
-      {/* MAIN CONTENT */}
       <main className="app-main">
         <TopBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
-        {/* Page Wrapper */}
-        <div className="page-area">
-          {children}
-        </div>
+        <div className="page-area">{children}</div>
       </main>
-
     </div>
   );
 }
 
-
-// ---------------- MAIN APP ----------------
+/* ============= */
+/* ROOT APP FILE */
+/* ============= */
 export default function App() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const handleCropAdded = () => {
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="App">
-
-      {/* NAVBAR */}
+      {/* NAVBAR ALWAYS VISIBLE */}
       <Navbar />
 
       <Routes>
-
         {/* HOME PAGE */}
         <Route
           path="/"
           element={
-            <MainLayout 
-              searchTerm={searchTerm} 
+            <MainLayout
+              searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             >
               <>
@@ -71,21 +72,29 @@ export default function App() {
         <Route
           path="/upload"
           element={
-            <MainLayout 
-              searchTerm={searchTerm} 
+            <MainLayout
+              searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             >
-              <CropUploadForm onCropAdded={handleCropAdded} />
+              <UploadPage onCropAdded={handleCropAdded} />
             </MainLayout>
           }
         />
+
+        {/* ========================= */}
+        {/* AUTH PAGES (NO SIDEBAR)  */}
+        {/* ========================= */}
+
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/admin" element={<AdminLogin />} />
 
         {/* FALLBACK */}
         <Route
           path="*"
           element={
-            <MainLayout 
-              searchTerm={searchTerm} 
+            <MainLayout
+              searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             >
               <>
@@ -95,14 +104,12 @@ export default function App() {
             </MainLayout>
           }
         />
-
       </Routes>
 
       {/* FOOTER */}
       <footer className="app-footer">
         <p>© 2024 AgriConnect - Connecting Farmers, Buyers & Communities</p>
       </footer>
-
     </div>
   );
 }
