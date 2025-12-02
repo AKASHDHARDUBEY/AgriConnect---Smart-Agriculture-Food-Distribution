@@ -3,7 +3,8 @@ import React from 'react';
 
 const Login = () => {
     const handleGoogleLogin = () => {
-        window.open('http://localhost:5001/auth/google', '_self');
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+        window.open(`${apiUrl}/auth/google`, '_self');
     };
 
     return (
