@@ -98,7 +98,9 @@ const CropUploadForm = ({ onCropAdded }) => {
       }
     } catch (err) {
       console.error('Upload Error:', err);
-      alert(err.response?.data?.message || 'Failed to upload crop. Please try again.');
+      const status = err.response?.status;
+      const msg = err.response?.data?.message || 'Failed to upload crop.';
+      alert(`Error (${status || 'Unknown'}): ${msg} Please try again.`);
     } finally {
       setIsSubmitting(false);
     }

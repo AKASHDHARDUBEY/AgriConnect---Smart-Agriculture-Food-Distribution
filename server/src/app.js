@@ -22,11 +22,22 @@ if (process.env.NODE_ENV === 'development') {
 
 // Implement CORS
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://agri-connect-smart-agriculture-food-distribution-ofxo0c7dw.vercel.app',
-        process.env.CLIENT_URL // Allow setting via env var
-    ],
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        // Allow localhost and Vercel domains
+        if (origin === 'http://localhost:3000' || origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        }
+
+        // Allow custom domain from env
+        if (process.env.CLIENT_URL && origin === process.env.CLIENT_URL) {
+            return callback(null, true);
+        }
+
+        return callback(new Error('Not allowed by CORS'), false);
+    },
     credentials: true
 }));
 
