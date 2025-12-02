@@ -17,11 +17,12 @@ router.get(
 router.get(
     '/google/callback',
     passport.authenticate('google', {
-        failureRedirect: (process.env.CLIENT_URL || 'http://localhost:3000') + '/login'
+        failureRedirect: (process.env.CLIENT_URL || 'https://agri-connect-smart-agriculture-food.vercel.app') + '/login'
     }),
     (req, res) => {
         // Successful authentication, redirect home.
-        const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+        const clientUrl = process.env.CLIENT_URL || 'https://agri-connect-smart-agriculture-food.vercel.app';
+        console.log('Redirecting to:', clientUrl); // Debug log
         res.redirect(clientUrl);
     }
 );

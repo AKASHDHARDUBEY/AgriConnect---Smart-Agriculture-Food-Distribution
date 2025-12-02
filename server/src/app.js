@@ -49,7 +49,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express.static('public'));
 
 // Trust proxy (required for Render/Heroku to pass secure cookies)
-app.set('trust proxy', 1);
+app.set('trust proxy', true);
 
 // Cookie session
 app.use(
