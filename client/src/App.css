@@ -86,7 +86,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVENESS OF THE WEBSITE HERE */
 @media (max-width: 768px) {
   .app-main {
     margin-left: 0;
