@@ -57,6 +57,7 @@ exports.createProduct = async (req, res, next) => {
         }
 
         const imageUrl = req.file.path;
+        console.log('Cloudinary URL:', imageUrl);
 
         const newProduct = await prisma.product.create({
             data: {
@@ -69,6 +70,8 @@ exports.createProduct = async (req, res, next) => {
                 farmerId: req.user.id
             }
         });
+
+        console.log('Product Created:', newProduct);
 
         res.status(201).json({
             status: 'success',

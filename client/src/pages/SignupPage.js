@@ -25,7 +25,10 @@ export default function SignupPage() {
         navigate('/'); // Redirect to home/dashboard
       }
     } catch (err) {
-      alert(err.response?.data?.message || 'Signup failed. Please try again.');
+      console.error('Signup Error:', err);
+      const errorMsg = err.response?.data?.message || 'Signup failed.';
+      const errorDetails = err.response?.data?.error ? JSON.stringify(err.response.data.error) : '';
+      alert(`Error: ${errorMsg}\nDetails: ${errorDetails}`);
     }
   };
 
