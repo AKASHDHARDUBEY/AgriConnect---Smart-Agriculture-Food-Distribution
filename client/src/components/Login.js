@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 const Login = () => {
     const navigate = useNavigate();
+    const { login } = useUser();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -22,6 +24,7 @@ const Login = () => {
             }, { withCredentials: true });
 
             if (response.data.status === 'success') {
+                login(response.data.data.user);
                 alert('Logged in successfully!');
                 navigate('/'); // Redirect to home
             }

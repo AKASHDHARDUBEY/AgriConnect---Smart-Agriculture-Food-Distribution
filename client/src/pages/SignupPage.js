@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 import AuthCard from "../components/AuthCard";
 import "./AuthPages.css";
 
 export default function SignupPage() {
   const navigate = useNavigate();
+  const { login } = useUser();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +23,7 @@ export default function SignupPage() {
       }, { withCredentials: true });
 
       if (response.data.status === 'success') {
+        login(response.data.data.user);
         alert('Account created successfully!');
         navigate('/'); // Redirect to home/dashboard
       }

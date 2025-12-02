@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { UserProvider } from "./context/UserContext";
 import "./App.css";
 
 /* USER COMPONENTS */
@@ -55,116 +56,118 @@ export default function App() {
   };
 
   return (
-    <div className="App">
+    <UserProvider>
+      <div className="App">
 
-      {/* NAVBAR ALWAYS VISIBLE */}
-      <Navbar />
+        {/* NAVBAR ALWAYS VISIBLE */}
+        <Navbar />
 
-      <Routes>
+        <Routes>
+          {/* ... routes ... */}
+          {/* ================= USER ROUTES ================= */}
 
-        {/* ================= USER ROUTES ================= */}
+          {/* HOME */}
+          <Route
+            path="/"
+            element={
+              <MainLayout
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              >
+                <>
+                  <LandingHero />
+                  <Marketplace searchTerm={searchTerm} />
+                </>
+              </MainLayout>
+            }
+          />
 
-        {/* HOME */}
-        <Route
-          path="/"
-          element={
-            <MainLayout
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-            >
-              <>
-                <LandingHero />
-                <Marketplace searchTerm={searchTerm} />
-              </>
-            </MainLayout>
-          }
-        />
+          {/* UPLOAD PAGE */}
+          <Route
+            path="/upload"
+            element={
+              <MainLayout
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              >
+                <UploadPage onCropAdded={handleCropAdded} />
+              </MainLayout>
+            }
+          />
 
-        {/* UPLOAD PAGE */}
-        <Route
-          path="/upload"
-          element={
-            <MainLayout
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-            >
-              <UploadPage onCropAdded={handleCropAdded} />
-            </MainLayout>
-          }
-        />
-
-        {/* MY ADS PAGE */}
-        <Route
-          path="/myads"
-          element={
-            <MainLayout
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-            >
-              <MyAdsPage />
-            </MainLayout>
-          }
-        />
-
-
-        {/* ================= AUTH ROUTES (NO SIDEBAR) ================= */}
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/admin" element={<AdminLogin />} />
+          {/* MY ADS PAGE */}
+          <Route
+            path="/myads"
+            element={
+              <MainLayout
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              >
+                <MyAdsPage />
+              </MainLayout>
+            }
+          />
 
 
-        {/* ================= ADMIN PROTECTED ROUTES ================= */}
+          {/* ================= AUTH ROUTES (NO SIDEBAR) ================= */}
 
-        {/* Admin Dashboard */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <AdminProtectedRoute>
-              <AdminLayout>
-                <AdminDashboard />
-              </AdminLayout>
-            </AdminProtectedRoute>
-          }
-        />
-
-        {/* Admin Manage Listings */}
-        <Route
-          path="/admin/listings"
-          element={
-            <AdminProtectedRoute>
-              <AdminLayout>
-                <AdminManageListings />
-              </AdminLayout>
-            </AdminProtectedRoute>
-          }
-        />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/admin" element={<AdminLogin />} />
 
 
-        {/* ================= FALLBACK ROUTE ================= */}
-        <Route
-          path="*"
-          element={
-            <MainLayout
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-            >
-              <>
-                <LandingHero />
-                <Marketplace searchTerm={searchTerm} />
-              </>
-            </MainLayout>
-          }
-        />
+          {/* ================= ADMIN PROTECTED ROUTES ================= */}
 
-      </Routes>
+          {/* Admin Dashboard */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <AdminProtectedRoute>
+                <AdminLayout>
+                  <AdminDashboard />
+                </AdminLayout>
+              </AdminProtectedRoute>
+            }
+          />
+
+          {/* Admin Manage Listings */}
+          <Route
+            path="/admin/listings"
+            element={
+              <AdminProtectedRoute>
+                <AdminLayout>
+                  <AdminManageListings />
+                </AdminLayout>
+              </AdminProtectedRoute>
+            }
+          />
 
 
-      {/* FOOTER of the website */}
-      <footer className="app-footer">
-        <p>© 2024 AgriConnect - Connecting Farmers, Buyers & Communities</p>
-      </footer>
+          {/* ================= FALLBACK ROUTE ================= */}
+          <Route
+            path="*"
+            element={
+              <MainLayout
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              >
+                <>
+                  <LandingHero />
+                  <Marketplace searchTerm={searchTerm} />
+                </>
+              </MainLayout>
+            }
+          />
 
-    </div>
+        </Routes>
+
+
+        {/* FOOTER of the website */}
+        <footer className="app-footer">
+          <p>© 2024 AgriConnect - Connecting Farmers, Buyers & Communities</p>
+        </footer>
+
+      </div>
+    </UserProvider>
   );
 }

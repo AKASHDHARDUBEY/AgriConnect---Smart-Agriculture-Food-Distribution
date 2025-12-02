@@ -1,9 +1,10 @@
-// src/components/Navbar.js
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 import "./Navbar.css";
 
 export default function Navbar() {
+  const { user, logout } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -53,7 +54,27 @@ export default function Navbar() {
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/marketplace" className="nav-link">Marketplace</Link>
           <Link to="/farm" className="nav-link">Farmer Dashboard</Link>
-          <Link to="/login" className="nav-link">Login</Link>
+          {user ? (
+            <div className="nav-user-menu" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <span className="user-name" style={{ fontWeight: 'bold' }}>Hello, {user.name?.split(' ')[0]}</span>
+              <button
+                onClick={logout}
+                className="logout-btn"
+                style={{
+                  background: 'none',
+                  border: '1px solid #ff4444',
+                  color: '#ff4444',
+                  padding: '5px 10px',
+                  borderRadius: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="nav-link">Login</Link>
+          )}
 
           <Link to="/upload" className="sell-btn">+ Sell Crop</Link>
 
@@ -84,6 +105,23 @@ export default function Navbar() {
           <Link to="/marketplace" onClick={() => setMenuOpen(false)} className="mobile-link">Marketplace</Link>
           <Link to="/farm" onClick={() => setMenuOpen(false)} className="mobile-link">Farmer Dashboard</Link>
           <Link to="/upload" onClick={() => setMenuOpen(false)} className="mobile-sell-btn">+ Sell Crop</Link>
+
+          {user ? (
+            <>
+              <div className="mobile-link" style={{ color: '#2c3e50', fontWeight: 'bold' }}>
+                👤 {user.name}
+              </div>
+              <button
+                onClick={() => { logout(); setMenuOpen(false); }}
+                className="mobile-link"
+                style={{ color: '#ff4444', textAlign: 'left', width: '100%', background: 'none', border: 'none' }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" onClick={() => setMenuOpen(false)} className="mobile-link">Login</Link>
+          )}
 
           {/* Mobile Dark mode toggle */}
           <button
