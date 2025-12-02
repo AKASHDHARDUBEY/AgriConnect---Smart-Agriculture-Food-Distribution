@@ -9,7 +9,7 @@ router
     .get(productController.getAllProducts)
     .post(
         authMiddleware.protect,
-        authMiddleware.restrictTo('FARMER', 'ADMIN'),
+        authMiddleware.restrictTo('FARMER', 'ADMIN', 'BUYER'),
         productController.uploadProductImage,
         productController.createProduct
     );
