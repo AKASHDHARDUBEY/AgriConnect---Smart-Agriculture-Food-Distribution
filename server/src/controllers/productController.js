@@ -3,28 +3,24 @@ const multer = require('multer');
 const prisma = new PrismaClient();
 const AppError = require('../utils/appError');
 
-const multerStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/img/products');
-    },
-    filename: (req, file, cb) => {
-        const ext = file.mimetype.split('/')[1];
-        cb(null, `product-${req.user.id}-${Date.now()}.${ext}`);
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'agriconnect-products',
+        allowed_formats: ['jpg', 'png', 'jpeg']
     }
 });
 
-const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
-        cb(null, true);
-    } else {
-        cb(new AppError('Not an image! Please upload only images.', 400), false);
-    }
-};
-
-const upload = multer({
-    storage: multerStorage,
-    fileFilter: multerFilter
-});
+const upload = multer({ storage: storage });
 
 exports.uploadProductImage = upload.single('image');
 
@@ -52,7 +48,7 @@ exports.createProduct = async (req, res, next) => {
         // req.user.role is guaranteed to be FARMER due to restrictTo middleware
 
         const { name, description, price, quantity, unit } = req.body;
-        const imageUrl = req.file ? `/img/products/${req.file.filename}` : null;
+        const imageUrl = req.file ? req.file.path : null;
 
         const newProduct = await prisma.product.create({
             data: {
