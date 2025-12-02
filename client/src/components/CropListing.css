@@ -255,3 +255,10 @@
     font-size: 1.3rem;
   }
 }
+/* smooth layer for animated cards */
+.crop-card,
+.upgraded-card {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-origin: center;
+}
