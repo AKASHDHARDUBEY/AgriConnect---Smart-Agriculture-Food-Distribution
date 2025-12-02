@@ -57,8 +57,9 @@ app.use(
         name: 'session',
         keys: [process.env.COOKIE_KEY || 'secret_key_1', process.env.COOKIE_KEY_2 || 'secret_key_2'],
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        secure: process.env.NODE_ENV === 'production', // Secure in production
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // None for cross-site
+        secure: true, // Always secure for Render
+        sameSite: 'none', // Always none for cross-site
+        httpOnly: true
     })
 );
 
