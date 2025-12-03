@@ -6,94 +6,173 @@ AgriConnect is a full-stack platform that connects farmers, buyers, and citizens
 
 ---
 
-## 🚀 Features
+## 🚀 Live Deployment
+
+| Component | Service | URL |
+|-----------|---------|-----|
+| **Frontend** | Vercel | [https://agri-connect-smart-agriculture-food.vercel.app](https://agri-connect-smart-agriculture-food.vercel.app) |
+| **Backend** | Render | [https://agriconnect-smart-agriculture-food.onrender.com](https://agriconnect-smart-agriculture-food.onrender.com) |
+| **Database** | Railway | MySQL (Managed) |
+| **Storage** | Cloudinary | Image Storage |
+
+---
+
+## ✨ Key Features
 
 ### 🌱 For Farmers
-- AI & GPS-based crop recommendations using remote sensing and market data  
-- Suggests best crops, seeds, and farming practices for the land  
+- **Direct Selling**: Upload crops with images, prices, and quantities.
+- **Dashboard**: Manage listings and view market trends.
+- **AI Recommendations**: (Planned) GPS-based crop suggestions.
 
-### 🛒 For Sellers
-- Simple listing system (like OLX/Quikr) to upload produce photos and prices  
-- Enables direct buyer-farmer connections, removing middlemen  
+### 🔐 Authentication & Security
+- **Google OAuth**: One-click login with Google.
+- **Email/Password**: Secure signup and login with hashed passwords (Bcrypt).
+- **Role-Based Access**: Farmers, Buyers, and Admins.
+- **Secure Sessions**: HttpOnly cookies with cross-site support.
 
-### 🍚 For Communities
-- Integrates with Public Distribution System (PDS)  
-- Sends alerts when ration items (rice, wheat, dal, oil) are ready for pickup  
-- Direct escalation system if food isn’t received  
-
----
-
-## 🧠 Tech Stack
-- **Frontend:** React.js  
-- **Backend:** Node.js + Express.js  
-- **Database:** MySQL  
-- **ORM:** Prisma  
-- **Other Tools:** GPS APIs, Remote Sensing APIs, Futures Market Data, REST API Integration  
+### 🛒 For Buyers
+- **Marketplace**: Browse fresh produce directly from farmers.
+- **Contact**: Connect directly with sellers.
 
 ---
 
-## 🗂️ Folder Structure
-AgriConnect/
-├── client/ # React frontend
-│ ├── src/
-│ ├── public/
-│ └── package.json
-├── server/ # Express backend
-│ ├── src/
-│ ├── prisma/
-│ ├── .env
-│ └── package.json
-├── README.md
-└── .gitignore
+## 🛠️ Tech Stack
 
-
+- **Frontend:** React.js, CSS3, Axios
+- **Backend:** Node.js, Express.js
+- **Database:** MySQL (via Railway)
+- **ORM:** Prisma
+- **Authentication:** Passport.js (Google & Local Strategies)
+- **File Storage:** Cloudinary
+- **Deployment:** Vercel (Client), Render (Server)
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Local Development Setup
 
-### 1️⃣ Clone the repository
+Follow these steps to run the project locally on your machine.
+
+### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/<your-username>/AgriConnect.git
 cd AgriConnect
+```
 
+### 2️⃣ Install Dependencies
+**Frontend:**
+```bash
+cd client
+npm install
+```
 
-### Install dependencies
-cd client && npm install
-cd ../server && npm install
+**Backend:**
+```bash
+cd ../server
+npm install
+```
 
+### 3️⃣ Configure Environment Variables
 
-3️⃣ Configure environment
+Create a `.env` file inside the `server/` directory with the following keys:
 
-Create a .env file inside the server/ folder:
+```env
+# Server Port
+PORT=5001
 
-DATABASE_URL="mysql://user:password@localhost:3306/agriconnect"
-PORT=5000
+# Database Connection (MySQL)
+DATABASE_URL="mysql://user:password@host:port/database"
 
-4️⃣ Run development servers
-# In separate terminals
-cd client && npm start
-cd server && npm run dev
+# Google OAuth Credentials (from Google Cloud Console)
+GOOGLE_CLIENT_ID="your_google_client_id"
+GOOGLE_CLIENT_SECRET="your_google_client_secret"
 
+# Cloudinary Credentials (for Image Uploads)
+CLOUDINARY_CLOUD_NAME="your_cloud_name"
+CLOUDINARY_API_KEY="your_api_key"
+CLOUDINARY_API_SECRET="your_api_secret"
 
-🧩 Future Enhancements
+# Session Secrets
+COOKIE_KEY="secret_key_1"
+COOKIE_KEY_2="secret_key_2"
 
-AI-driven yield predictions
+# Client URL (for CORS and Redirects)
+CLIENT_URL="http://localhost:3000"
+NODE_ENV="development"
+```
 
-Blockchain-based produce traceability
+Create a `.env` file inside the `client/` directory:
 
-Real-time market price updates
+```env
+REACT_APP_API_URL="http://localhost:5001"
+```
 
-Multi-language farmer support
+### 4️⃣ Database Setup
+Run Prisma migrations to set up the database schema:
+```bash
+cd server
+npx prisma migrate dev --name init
+```
 
-📜 License
+### 5️⃣ Run the Application
+
+**Start Backend:**
+```bash
+cd server
+npm run dev
+```
+*Server runs on http://localhost:5001*
+
+**Start Frontend:**
+```bash
+cd client
+npm start
+```
+*Client runs on http://localhost:3000*
+
+---
+
+## 📂 Project Structure
+
+```
+AgriConnect/
+├── client/                 # React Frontend
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Full page views
+│   │   ├── context/        # Global State (UserContext)
+│   │   └── App.js          # Main Router
+│   └── package.json
+│
+├── server/                 # Express Backend
+│   ├── src/
+│   │   ├── config/         # Passport & Cloudinary Config
+│   │   ├── controllers/    # Route Logic
+│   │   ├── middlewares/    # Auth & Error Handling
+│   │   ├── routes/         # API Routes
+│   │   └── app.js          # App Entry Point
+│   ├── prisma/             # Database Schema
+│   └── package.json
+│
+└── README.md
+```
+
+---
+
+## 📜 License
 
 This project is licensed under the MIT License.
 
-💬 Team FoodChainX
+---
 
-Project Lead: Akash Dhar Dubey
-Theme: Smart Agriculture & Food Security
-Hackathon/Initiative: Sustainable Tech Innovation 2025
+## � Team Members & Roles
 
-............
+| Name | Email | Role |
+|------|-------|------|
+| **Akash Dhar Dubey** | akash.dubey01@adypu.edu.in | Project Lead / Backend Developer |
+| **Suvendu Kumar Sahoo** | suvendu.sahu@adypu.edu.in | Frontend Developer |
+| **Aditya Phalke** | aditya.phalke@adypu.edu.in | Database & API Integration |
+| **Yash Mali** | yash.mali@adypu.edu.in | UI/UX Designer & Documentation |
+
+### 🏆 Hackathon Details
+**Theme:** Smart Agriculture & Food Security
+**Event:** Sustainable Tech Innovation 2025
